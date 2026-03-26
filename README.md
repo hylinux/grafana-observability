@@ -22,7 +22,6 @@ podman compose down   # 删除容器
 
 ```
 
-## podman compose 下载
-https://github.com/docker/compose/releases
+## 在`windows`上建议使用`Docker Desktop`
 
-docker-compose-windows-x86_64.exe
+经过测试发现`podman`在网络的配置上总是会出错，换回`Docker Desktop`反而没有问题，因此建议如果是在`windows`下开发，直接使用`Docker Desktop`
