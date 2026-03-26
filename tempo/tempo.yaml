@@ -1,0 +1,50 @@
+
+auth_enabled: false
+
+server:
+  # Tempo HTTP API（Grafana 查询、健康检查）
+  http_listen_port: 3200
+
+  # Tempo 内部 gRPC（querier / frontend / worker 内部通信）
+  # 不要和 OTLP 端口混用
+  grpc_listen_port: 9095
+  log_level: info
+
+distributor:
+  receivers:
+    otlp:
+      protocols:
+        grpc:
+          endpoint: "0.0.0.0:4317"
+        http:
+          endpoint: "0.0.0.0:4318"
+
+
+ingester:
+  # trace 多久不再接收 span 就认为完成并 flush
+  trace_idle_period: 10s
+
+  # 单个 block 的最大大小（默认 500MB）
+  max_block_bytes: 524288000
+
+  # 单个 block 的最大持续时间
+  max_block_duration: 5m
+  flush_all_on_shutdown: true
+
+compactor:
+  compaction:
+    # 本地保留 trace block 的时间
+    block_retention: 72h
+
+storage:
+  trace:
+    # ✅ 本地存储（single node / POC / lab）
+    backend: local
+
+    # Write-Ahead Log
+    wal:
+      path: /var/tempo/wal
+
+    # 已完成 block 的存储目录
+    local:
+      path: /var/tempo/blocks
