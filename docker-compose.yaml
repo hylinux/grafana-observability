@@ -1,6 +1,6 @@
 services:
   otel-collector:
-    image: otel/opentelemetry-collector-contrib
+    image: hongacr.azurecr.io/docker/otel/opentelemetry-collector-contrib
     container_name: otel-collector
     command: ["--config=/etc/otel/otel-collector.yaml"]
     volumes:
@@ -12,7 +12,7 @@ services:
       - loki
 
   tempo:
-    image: grafana/tempo:2.10.3
+    image: hongacr.azurecr.io/docker/grafana/tempo:2.10.3
     container_name: tempo
     volumes:
       - ./tempo/tempo.yaml:/etc/tempo.yaml
@@ -22,7 +22,7 @@ services:
       - "3200:3200"
 
   prometheus:
-    image: prom/prometheus
+    image: hongacr.azurecr.io/docker/prom/prometheus
     container_name: prometheus
     volumes:
       - ./prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml
@@ -33,7 +33,7 @@ services:
       - "9090:9090"
 
   loki:
-    image: grafana/loki
+    image: hongacr.azurecr.io/docker/grafana/loki
     container_name: loki
     volumes:
       - ./loki/loki.yaml:/etc/loki/loki.yaml
@@ -43,7 +43,7 @@ services:
       - "3100:3100"
 
   grafana:
-    image: grafana/grafana
+    image: hongacr.azurecr.io/docker/grafana/grafana
     container_name: grafana
     volumes:
       - ./data/grafana:/var/lib/grafana
