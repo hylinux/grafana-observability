@@ -48,5 +48,10 @@ services:
     volumes:
       - ./data/grafana:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_FEATURE_TOGGLES_ENABLE=disableGrafanaAPIServer
+      - GF_TRACING_ENABLED=false
+      - GF_TRACING_BACKEND=none
+      - GF_APISERVER_ENABLED=false
     ports:
       - "3000:3000"

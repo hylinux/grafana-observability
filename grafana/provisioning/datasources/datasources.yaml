@@ -3,15 +3,49 @@ apiVersion: 1
 datasources:
   - name: Tempo
     type: tempo
+    uid: tempo
     access: proxy
     url: http://tempo:3200
+    isDefault: false
+    jsonData:
+      httpMethod: GET
+
+      # ✅ 明确启用 HTTP 查询（避免 gRPC client 初始化）
+      queryMode: traceql
+
+      # ✅ Search / TraceQL 功能
+      traceQuery:
+        timeShiftEnabled: true
+        spanStartTimeShift: "-5m"
+        spanEndTimeShift: "5m"
+
+      # ✅ 允许从 trace 跳日志（后面 Loki 会用）
+      tracesToLogsV2:
+        datasourceUid: Loki
+        spanStartTimeShift: "-1m"
+        spanEndTimeShift: "1m"
+        tags:
+          - key: service.name
+            value: service
+          - key: trace_id
+            value: trace_id
+
+    editable: false
 
   - name: Prometheus
     type: prometheus
+    uid: Prometheus
     access: proxy
     url: http://prometheus:9090
+    jsonData:
+      httpMethod: GET
+    editable: false
 
   - name: Loki
     type: loki
+    uid: Loki
     access: proxy
     url: http://loki:3100
+    jsonData:
+      maxLines: 1000
+    editable: false
