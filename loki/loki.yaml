@@ -3,11 +3,6 @@ auth_enabled: false
 server:
   http_listen_port: 3100
 
-
-distributor:
-  otlp_config:
-    enabled: true
-
 common:
   path_prefix: /loki
   storage:

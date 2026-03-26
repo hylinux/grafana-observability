@@ -7,7 +7,6 @@ services:
       - ./otel/otel-collector.yaml:/etc/otel/otel-collector.yaml
     ports:
       - "4317:4317"
-      - "4318:4318"
     depends_on:
       - tempo
       - loki
