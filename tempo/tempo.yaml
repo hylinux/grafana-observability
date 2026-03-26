@@ -1,13 +1,14 @@
 
 auth_enabled: false
 
+
 server:
-  # Tempo HTTP API（Grafana 查询、健康检查）
+  http_listen_address: 0.0.0.0
   http_listen_port: 3200
 
-  # Tempo 内部 gRPC（querier / frontend / worker 内部通信）
-  # 不要和 OTLP 端口混用
+  grpc_listen_address: 0.0.0.0
   grpc_listen_port: 9095
+
   log_level: info
 
 distributor:
@@ -15,9 +16,7 @@ distributor:
     otlp:
       protocols:
         grpc:
-          endpoint: "0.0.0.0:4317"
         http:
-          endpoint: "0.0.0.0:4318"
 
 
 ingester:
